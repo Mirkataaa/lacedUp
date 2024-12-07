@@ -2,11 +2,11 @@ import jwt from "../lib/jwt.js";
 import User from "../models/User.js";
 import bcrypt from 'bcrypt';
 
-const authService = {
-    async register(username , email , password , rePass){
+const userService = {
+    async register(username , email , password , rePassword){
         const user = await User.findOne().or([{email} , {username}]);
 
-        if(password !== rePass) {
+        if(password !== rePassword) {
             throw new Error('Passwords missmatch!');
         }
 
@@ -19,14 +19,16 @@ const authService = {
             username,
             email,
             password,
+            role: 'user'
         });
 
         return this.generateToken(newUser)
     },
-    async login(username , password) {
+    async login(email , password) {
     
-        const user  = await User.findOne({username});
-
+        const user  = await User.findOne({email});
+        console.log(user);
+        
        
         if(!user) {
             throw new Error('Invalid user or password');
@@ -35,7 +37,8 @@ const authService = {
         if(!isValid) {
             throw new Error('Invalid user or password')
         }
-
+        console.log(this.generateToken(user));
+        
         return this.generateToken(user)
       
     },
@@ -44,6 +47,7 @@ const authService = {
             _id: user._id,
             email: user.email,
             username: user.username,
+            role: user.role
         };
 
         const header = {expiresIn: '2h'};
@@ -52,4 +56,4 @@ const authService = {
     }
 };
 
-export default authService;
+export default userService;

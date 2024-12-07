@@ -1,4 +1,4 @@
-import { Schema , model } from "mongoose";
+import { Schema , Types, model } from "mongoose";
 import bcypt from 'bcrypt';
 const SALT_ROUNDS = 10;
 
@@ -8,7 +8,6 @@ const userSchema = new Schema({
         type: String,
         required:[true , 'Username is required!'],
         minLength: [2, 'Username is too short!'],
-        maxLength: [20, 'Username is too long!'],
     },
     email: {
         type: String,
@@ -20,10 +19,15 @@ const userSchema = new Schema({
         required:[true, 'Password is required!'],
         minLength: [4, 'Password is too short!']
     },
-    favoriteList: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-    }],
+    role: {
+        type: String,
+        default: 'user',
+    },
+    orders: [{
+        type: Types.ObjectId,
+        ref: 'Cart'
+    }]
+
     
 });
 
