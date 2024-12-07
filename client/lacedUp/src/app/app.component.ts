@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FaConfig, FaIconLibrary , FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fontAwesomeIcons } from './shared/font-awesome-icons';
-import { NavbarComponent } from './layout/navbar/navbar.component';
-import { FooterComponent } from "./layout/footer/footer.component";
+import { NavbarComponent } from './core/navbar/navbar.component';
+import { FooterComponent } from './core/footer/footer.component';
 
 @Component({
   selector: 'app-root',

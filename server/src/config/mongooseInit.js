@@ -3,7 +3,7 @@ import { connect } from "mongoose";
 export default async function mongooseInit() {
     try {
         const url = process.env.DB_URL;
-        await connect(url, {dbName: 'ecom-angular'});
+        await connect(url, {dbName: 'lacedUp'});
         console.log('Successfully connect to DB!');
         
     } catch (err) {

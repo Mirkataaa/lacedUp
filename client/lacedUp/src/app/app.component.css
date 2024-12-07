@@ -1,0 +1,19 @@
+.flex {
+    position: relative;
+    z-index: 1; 
+  }
+  
+  .flex::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://media.gq.com/photos/60d21a25ab6b8cc6e9d2c80a/16:9/w_1280,c_limit/SNEAKER_GUIDE_OPENER.jpg'); 
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px);
+    z-index: -1; 
+    opacity: 0.6; 
+  }
