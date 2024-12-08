@@ -18,6 +18,10 @@ export class ProductService {
     return this.http.get<{ products: Product[] }>(url);
   }
 
+  getProductByCategoryAndId(category: string, id: string): Observable<any> {
+    return this.http.get(`/api/products/${category}/${id}`);
+  }
+
   getAllProducts(): Observable<Product[]> {
     const url = '/api/product';
     return this.http.get<Product[]>(url);
@@ -29,7 +33,7 @@ export class ProductService {
   addProduct(productData: Product): Observable<any> {
     const url = '/api/products';
     console.log(url);
-    
+
     return this.http.post<any>(url, productData);
   }
 

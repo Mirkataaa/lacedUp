@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription, tap } from 'rxjs';
 import { User } from '../types/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService implements OnDestroy {
   public user$$ = new BehaviorSubject<User | null>(null);
@@ -77,4 +77,3 @@ export class UserService implements OnDestroy {
     this.userSubscription?.unsubscribe();
   }
 }
-
