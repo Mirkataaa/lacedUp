@@ -1,0 +1,94 @@
+<div class="flex flex-col items-center justify-center py-6 px-4 font-[sans-serif] ">
+    <div class="max-w-md w-full">
+      <div class="p-8 rounded-2xl bg-white shadow">
+        <h2 class="text-gray-800 text-center text-2xl font-bold">Register</h2>
+        <form class="mt-8 space-y-4" [formGroup]="form" (ngSubmit)="register()">
+          <div>
+            <label for="email" class="text-gray-800 text-sm mb-2 block">Email</label>
+            <div class="relative flex items-center">
+              <input
+                [class]="isFieldMissing('email') || isEmailNotValid ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-400 focus:border-green-400' "
+                name="email"
+                type="email"
+                id="email"
+                required
+                class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-none"
+                placeholder="Enter email address"
+                formControlName="email"
+              />
+            </div>
+        </div>
+          <div>
+            <label for="email" class="text-gray-800 text-sm mb-2 block">Username</label>
+            <div class="relative flex items-center">
+              <input
+                [class]="isFieldMissing('username') || isNotMinLength ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-400 focus:border-green-400' "
+                name="username"
+                type="text"
+                id="username"
+                required
+                class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-none"
+                placeholder="Enter username"
+                formControlName="username"
+              />
+            </div>
+        </div>
+        <div formGroupName="passGroup">
+            <label for="password" class="text-gray-800 text-sm mb-2 block">Password</label>
+            <div class="relative flex items-center">
+              <input
+              [class]="(
+                  (passGroup?.get('password')?.touched &&
+                   passGroup?.get('password')?.errors?.['required'] ) ||
+                   (passGroup?.get('password')?.touched && 
+                   passGroup?.get('password')?.errors?.['minlength'])
+                )  ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-400 focus:border-green-400' "
+                  name="password"
+                  type="password"
+                  id="password"
+                  class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-none"
+                  placeholder="Enter password"
+                  formControlName="password"
+              />
+          </div>
+      </div>
+        <div formGroupName="passGroup">
+          <label for="rePassword" class="text-gray-800 text-sm mb-2 block">Repeat Password</label>
+          <div class="relative flex items-center">
+            <input
+            [class]="(
+              (passGroup?.get('rePassword')?.touched &&
+              (passGroup?.get('rePassword')?.errors?.['required'] ||
+              passGroup?.errors?.['matchPasswordsValidator'])) 
+            ) ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-green-400 focus:border-green-400' "
+                name="rePassword"
+                type="password"
+                id="rePassword"
+                formControlName="rePassword"
+                class="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-none"
+                placeholder="Repeat Password"
+            />
+        </div>
+    </div>
+      
+
+    <div class="!mt-8">
+      <button
+      
+        class="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+      >
+        Register
+      </button>
+    </div>
+    <p class="text-gray-800 text-sm !mt-8 text-center">
+      Don't have an account?
+      <a
+        routerLink="/login"
+        class="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold"
+        >Login here</a
+      >
+    </p>
+  </form>
+</div>
+</div>
+</div>

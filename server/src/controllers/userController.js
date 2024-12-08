@@ -43,7 +43,7 @@ userController.post("/register", isGuest, async (req, res) => {
 });
 
 // * Login route
-userController.post("/login", async (req, res) => {
+userController.post("/login", isGuest , async (req, res) => {
   const { email, password } = req.body;
   try {
     const token = await userService.login(email, password);
