@@ -16,8 +16,8 @@ export class NavbarComponent {
   activeMenu: string | null = null;
 
   toggleDropdown(menu: string, event: MouseEvent): void {
-    event.stopPropagation(); // Prevent event bubbling to document listener
-    this.activeMenu = this.activeMenu === menu ? null : menu; // Toggle the menu state
+    event.stopPropagation(); 
+    this.activeMenu = this.activeMenu === menu ? null : menu; 
   }
   
   
@@ -26,12 +26,12 @@ onDocumentClick(event: MouseEvent): void {
   const target = event.target as HTMLElement;
   const clickedInside = target.closest('.dropdown');
   if (!clickedInside) {
-    this.activeMenu = null; // Close any open dropdowns
+    this.activeMenu = null; 
   }
 }
 
   closeDropdown(): void {
-    this.activeMenu = null; // Reset the active menu
+    this.activeMenu = null; 
   }
   
   
