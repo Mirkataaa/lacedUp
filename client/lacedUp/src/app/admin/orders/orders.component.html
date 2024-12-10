@@ -1,0 +1,91 @@
+<div class="p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold mb-4">Manage Orders</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full table-auto">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border-b text-left">Order ID</th>
+          <th class="px-4 py-2 border-b text-left">Customer Name</th>
+          <th class="px-4 py-2 border-b text-left">Status</th>
+          <th class="px-4 py-2 border-b text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of orders; track $index) {
+        <tr>
+          <td class="px-4 py-2 border-b">{{ order._id }}</td>
+          <td class="px-4 py-2 border-b">{{ order.userId }}</td>
+          <td class="px-4 py-2 border-b">{{ order.status }}</td>
+          <td class="px-4 py-2 border-b">
+            <button
+              (click)="openModal(order)"
+              class="bg-blue-500 text-white py-1 px-4 rounded"
+            >
+              View
+            </button>
+            <button
+              [ngClass]="{ hidden: order.status !== 'Pending' }"
+              (click)="approveOrder(order._id)"
+              class="bg-green-500 text-white py-1 px-4 rounded ml-2"
+            >
+              Approve
+            </button>
+
+            <button
+              [ngClass]="{ hidden: order.status !== 'Pending' }"
+              (click)="rejectOrder(order._id)"
+              class="bg-red-500 text-white py-1 px-4 rounded ml-2"
+            >
+              Reject
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<div
+  *ngIf="isModalOpen"
+  class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10"
+>
+  <div class="bg-white p-6 rounded-lg w-1/3">
+    <h3 class="text-lg font-semibold mb-4">Order Details</h3>
+    <div class="mb-4"><strong>Order ID:</strong> {{ selectedOrder?._id }}</div>
+    <div class="mb-4">
+      <strong>Customer Name:</strong> {{ selectedOrder?.userId }}
+    </div>
+    <div class="mb-4">
+      <strong>Items:</strong>
+      <ul>
+        @for (item of selectedOrder?.items; track $index) {
+        <li>
+          {{ item.quantity }} x {{ item.productName }} - ${{ item.price }}
+        </li>
+        }
+      </ul>
+    </div>
+    <div class="mb-4"><strong>Status:</strong> {{ selectedOrder?.status }}</div>
+    <button
+      (click)="closeModal()"
+      class="bg-gray-500 text-white py-1 px-4 rounded mr-2"
+    >
+      Close
+    </button>
+    <button
+      [ngClass]="{ hidden: selectedOrder?.status !== 'Pending' }"
+      (click)="approveOrder(selectedOrder?._id)"
+      class="bg-green-500 text-white py-1 px-4 rounded"
+    >
+      Approve
+    </button>
+
+    <button
+      [ngClass]="{ hidden: selectedOrder?.status !== 'Pending' }"
+      (click)="rejectOrder(selectedOrder?._id)"
+      class="bg-red-500 text-white py-1 px-4 rounded ml-2"
+    >
+      Reject
+    </button>
+  </div>
+</div>

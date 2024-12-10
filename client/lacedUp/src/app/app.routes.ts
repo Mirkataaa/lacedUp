@@ -9,6 +9,7 @@ import { ClothingComponent } from './products/clothing/clothing.component';
 import { DetailsComponent } from './products/details/details.component';
 import { CheckoutComponent } from './user/checkout/checkout.component';
 import { CartComponent } from './user/cart/cart.component';
+import { OrdersComponent } from './admin/orders/orders.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,7 +18,10 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'admin',
-    children: [{ path: 'add-product', component: AddProductComponent }],
+    children: [
+      { path: 'add-product', component: AddProductComponent },
+      { path: 'orders', component: OrdersComponent },
+    ],
   },
   {
     path: 'products',

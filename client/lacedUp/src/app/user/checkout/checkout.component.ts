@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CartItem } from '../../types/cart';
 import { CartService } from '../cart.service';
 import { Router } from '@angular/router';
+import { OrderService } from '../../admin/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,6 +20,7 @@ export class CheckoutComponent {
 
   constructor(
     private fb: FormBuilder,
+    private orderService: OrderService,
     private cartService: CartService,
     private router: Router
   ) {
@@ -42,13 +44,13 @@ export class CheckoutComponent {
     this.cartService.getCart().subscribe({
       next: (cart) => {
         console.log(cart);
-
+        
         this.cartItems = cart.items;
         this.totalPrice = this.calculateTotalPrice(this.cartItems);
       },
       error: (err) => {
         console.error('Failed to load cart:', err);
-      },
+      }
     });
   }
 
@@ -56,17 +58,25 @@ export class CheckoutComponent {
     if (this.orderForm.valid) {
       const shippingDetails = this.orderForm.value;
       const cart = this.cartItems;
-      console.log('Shipping:', shippingDetails);
-      console.log('cart:', cart);
+      console.log('Shipping:' ,shippingDetails);
+      
+      console.log('cart:' , cart);
+      
+      this.orderService.createOrder(this.cartItems, shippingDetails, this.totalPrice).subscribe({
+        next: (response) => {
+          console.log('Order created:', response);
+          this.router.navigate(['/home'])
+        },
+        error: (error) => {
+          console.error('Error creating order:', error);
+        }
+      });
     } else {
       console.log('Form is invalid');
     }
   }
 
   calculateTotalPrice(cartItems: CartItem[]): number {
-    return cartItems.reduce(
-      (total, item) => total + item.productId.price * item.quantity,
-      0
-    );
+    return cartItems.reduce((total, item) => total + item.productId.price * item.quantity, 0);
   }
 }
