@@ -15,7 +15,45 @@ const orderItemSchema = new Schema({
     type: Number,
     required: true,
   },
+  selectedSize: {
+    type: String
+  }
 });
+
+const shippingDetailsSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phoneNo: {
+    type: Number,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  zipCode: {
+    type: Number,
+    required: true,
+  }, 
+})
 
 const orderSchema = Schema({
     userId: {
@@ -33,24 +71,7 @@ const orderSchema = Schema({
       enum: ["Pending", "Accepted", "Rejected"],
       default: "Pending",
     },
-    shippingDetails: {
-    address: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    zipCode: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-  },
+    shippingDetails: [shippingDetailsSchema],
   },
   { timestamps: true });
 

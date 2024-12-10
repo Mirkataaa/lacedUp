@@ -80,12 +80,12 @@ export class AddProductComponent {
       console.log('Form Submitted', this.productForm.value);
 
       this.productService.addProduct(this.productForm.value).subscribe({
-        next: (response: any) => {
+        next: (response) => {
           console.log('Product added successfully', response);
           this.toastr.success('Product added successfully!', 'Success');
           this.router.navigate(['/catalog']);
         },
-        error: (error: any) => {
+        error: (error) => {
           console.error('Error occurred while adding product', error);
           this.toastr.error('Failed to add product', 'Error');
         },

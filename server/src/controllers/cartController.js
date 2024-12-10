@@ -1,36 +1,61 @@
-import { Router } from 'express';
-import cartService from '../services/cartService.js';
+import { Router } from "express";
+import cartService from "../services/cartService.js";
 
 const cartController = Router();
 
-
 // * Get the user's cart
-cartController.get('/' , async (req, res) => {
-    console.log(req.user);
-    
+cartController.get("/", async (req, res) => {
+  console.log(req.user);
+
   try {
-    const userId = req.user._id; 
+    const userId = req.user._id;
     const cart = await cartService.getCart(userId);
-    console.log('hello');
+    console.log("hello");
     console.log(cart);
     console.log(userId);
-    
+
     res.status(200).json(cart);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
+cartController.put("/size", async (req, res) => {
+  const { productId, size } = req.body;
+  const userId = req.user._id;
+
+  try {
+    const updatedItem = await cartService.updateItemSize(
+      userId,
+      productId,
+      size
+    );
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    if (
+      error.message === "Cart not found" ||
+      error.message === "Item not found in cart"
+    ) {
+      res.status(404).json({ message: error.message });
+    } else {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+});
+
 // * Add an item to the cart
-cartController.post('/'  , async (req, res) => {
-    console.log(req.params);
-    
+cartController.post("/", async (req, res) => {
+  console.log(req.params);
+
   try {
     const userId = req.user._id;
     const { productId, quantity } = req.body;
 
     if (!productId || !quantity) {
-      return res.status(400).json({ message: 'Product ID and quantity are required' });
+      return res
+        .status(400)
+        .json({ message: "Product ID and quantity are required" });
     }
 
     const cart = await cartService.addItemToCart(userId, productId, quantity);
@@ -41,7 +66,7 @@ cartController.post('/'  , async (req, res) => {
 });
 
 // * Remove an item from the cart
-cartController.delete('/:productId',  async (req, res) => {
+cartController.delete("/:productId", async (req, res) => {
   try {
     const userId = req.user._id;
     const { productId } = req.params;
@@ -54,13 +79,15 @@ cartController.delete('/:productId',  async (req, res) => {
 });
 
 // * Update the quantity of an item in the cart
-cartController.patch('/', async (req, res) => {
+cartController.put("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const { productId, quantity } = req.body;
 
     if (!productId || !quantity) {
-      return res.status(400).json({ message: 'Product ID and quantity are required' });
+      return res
+        .status(400)
+        .json({ message: "Product ID and quantity are required" });
     }
 
     const cart = await cartService.updateCartItem(userId, productId, quantity);
@@ -71,7 +98,7 @@ cartController.patch('/', async (req, res) => {
 });
 
 // * Clear the cart
-cartController.delete('/', async (req, res) => {
+cartController.delete("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const cart = await cartService.clearCart(userId);
@@ -82,11 +109,11 @@ cartController.delete('/', async (req, res) => {
 });
 
 // * Checkout the cart
-cartController.post('/checkout', async (req, res) => {
+cartController.post("/checkout", async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await cartService.checkout(userId);
-    res.status(200).json({ message: 'Checkout successful', user });
+    res.status(200).json({ message: "Checkout successful", user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

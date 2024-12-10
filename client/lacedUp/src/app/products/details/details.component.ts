@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Product } from '../../types/product';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../product.service';
+import { CartService } from '../../user/cart.service';
 
 @Component({
   selector: 'app-details',
@@ -14,10 +15,13 @@ export class DetailsComponent {
   product: Product | null = null;
   error: string | null = null;
   selectedSize: string | null = null;
+  productId: string = ''
+
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService:CartService
   ) {}
 
   ngOnInit(): void {
@@ -27,8 +31,8 @@ export class DetailsComponent {
     if (category && id) {
       this.productService.getProductByCategoryAndId(category, id).subscribe({
         next: (data) => {
-          console.log(data);
           this.product = data;
+          this.productId = data._id;
         },
         error: (err) => {
           this.error = 'Failed to load product details';
@@ -42,5 +46,19 @@ export class DetailsComponent {
 
   selectSize(size: string): void {
     this.selectedSize = size;
+  }
+
+  addItem(productId: string, quantity: number = 1): void {
+    this.cartService.addItemToCart(productId, quantity).subscribe({
+      next: (data) => {
+        console.log( 'Sneaker data' ,data);
+        
+        // Optionally reload cart data after adding the item
+        // this.loadCart(); // Refresh the cart after adding item
+      },
+      error: (error) => {
+        console.error('Error adding item to cart:', error);
+      }
+    });
   }
 }

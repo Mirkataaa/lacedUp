@@ -7,6 +7,8 @@ import { SneakersComponent } from './products/sneakers/sneakers.component';
 import { AccessoriesComponent } from './products/accessories/accessories.component';
 import { ClothingComponent } from './products/clothing/clothing.component';
 import { DetailsComponent } from './products/details/details.component';
+import { CheckoutComponent } from './user/checkout/checkout.component';
+import { CartComponent } from './user/cart/cart.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,4 +28,6 @@ export const routes: Routes = [
       { path: ':category/:id', component: DetailsComponent },
     ],
   },
+  {path: 'checkout' , component: CheckoutComponent},
+  {path: 'cart' , component: CartComponent},
 ];

@@ -1,185 +1,192 @@
 <div class="navbar bg-base-100">
-    <div class="navbar-start">
-      <div class="dropdown">
-        <a class="btn btn-ghost text-xl" routerLink="/home">
-          <div class="border-1 bg-secondary logo p-2 rounded-xl">
-            <img
-              src="logo.jpg"
-              alt="Sneaker Logo"
-              class="h-12 w-auto object-contain"
-            />
-          </div>
-        </a>
-      </div>
+  <div class="navbar-start">
+    <div class="dropdown">
+      <a class="btn btn-ghost text-xl" routerLink="/home">
+        <div class="border-1 bg-secondary logo p-2 rounded-xl">
+          <img
+            src="logo.jpg"
+            alt="Sneaker Logo"
+            class="h-12 w-auto object-contain"
+          />
+        </div>
+      </a>
     </div>
-    <div class="navbar-center flex">
-      <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">
-        <li><a href="/home">Home</a></li>
-        <li>
-          <div
-            class="dropdown dropdown-end me-2"
-            tabindex="1"
-            (click)="toggleDropdown( 'productsMenu' , $event)"
-          >
-            <div class="w-10 h-10 rounded-full cursor-pointer">Products</div>
-            @if (activeMenu === 'productsMenu') {
-            <ul
-              class="absolute top-full left-0 mt-2 dropdown-content z-10 bg-stone-100 divide-y divide-white rounded-lg shadow w-44"
-            >
-              <li>
-                <a
-                  routerLink="/products/Sneakers"
-                  class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                  >Sneakers</a
-                >
-              </li>
-              <li>
-                <a
-                  routerLink="/products/Clothing"
-                  class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                  >Clothing</a
-                >
-              </li>
-              <li>
-                <a
-                  routerLink="/products/Accessories"
-                  class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                  >Accessories</a
-                >
-              </li>
-            </ul>
-            }
-          </div>
-        </li>
-        <li>
-          <div
-            class="dropdown dropdown-end me-2"
-            tabindex="1"
-            (click)="toggleDropdown('adminMenu' , $event)"
-          >
-            <div class="w-10 h-10 rounded-full cursor-pointer">Admin</div>
-            <ul
-              class="absolute top-full left-0 mt-2 dropdown-content z-10 bg-stone-100 divide-y divide-white rounded-lg shadow w-44"
-            >
-              <li>
-                <a
-                  class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                  routerLink="/admin/add-product"
-                  >Add Product</a
-                >
-              </li>
-              <li>
-                <a
-                  class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                  routerLink="/admin/orders"
-                  >Orders</a
-                >
-              </li>
-              <li>
-                <a
-                  class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                  routerLink="/admin/manage-users"
-                  >Manage Users</a
-                >
-              </li>
-            </ul>
-          </div>
-        </li>
-      </div>
-    </div>
-    <div class="navbar-end pe-4 flex align-items-center">
-      <div class="dropdown dropdown-end me-2">
-        <img
-          tabindex="0"
-          role="button"
-          src="avatar.jpg"
-          alt="User Avatar"
-          class="w-10 h-10 rounded-full cursor-pointer"
-          (click)="toggleDropdown( 'profileMenu' , $event)"
-        />
-        @if (activeMenu === 'profileMenu') {
+  </div>
+  <div class="navbar-center flex">
+    <div class="menu menu-sm sm:menu-lg menu-horizontal px-1">
+      <li><a routerLink="/home">Home</a></li>
+      <li>
         <div
-          class="dropdown-content z-10 bg-stone-100 divide-y divide-white rounded-lg shadow w-44"
+          class="dropdown dropdown-end me-2"
+          tabindex="1"
+          (click)="toggleDropdown('productsMenu', $event)"
         >
-          <div class="px-4 py-3 text-sm text-gray-900">
-            <div>{{ userName }}</div>
-            <div class="font-medium truncate">{{ userEmail }}</div>
-          </div>
-          <ul class="py-2 text-sm text-gray-800">
+          <div class="w-10 h-10 rounded-full cursor-pointer">Products</div>
+          @if (activeMenu === 'productsMenu') {
+          <ul
+            class="absolute top-full left-0 mt-2 dropdown-content z-10 bg-stone-100 divide-y divide-white rounded-lg shadow w-44"
+          >
             <li>
               <a
-                routerLink="/dashboard"
+                routerLink="/products/Sneakers"
                 class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                >Sneakers</a
               >
-                Dashboard
-              </a>
             </li>
             <li>
               <a
-                routerLink="/settings"
+                routerLink="/products/Clothing"
                 class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-  
+                >Clothing</a
               >
-                Settings
-              </a>
             </li>
             <li>
               <a
-                routerLink="/earnings"
+                routerLink="/products/Accessories"
                 class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                >Accessories</a
               >
-                Earnings
-              </a>
             </li>
           </ul>
-          <div class="py-1">
-            <button
-              (click)="closeDropdown()"
-              class="block w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-            >
-              Sign out
-            </button>
-          </div>
+          }
         </div>
-        }
-      </div>
-      <div class="dropdown dropdown-end me-2">
-        <div tabindex="0" role="button" (click)="toggleDropdown( 'userMenu' , $event)">
-          <fa-icon [icon]="['fas', 'user']" class="menu-icon text-xl"></fa-icon>
-        </div>
-         @if (activeMenu === 'userMenu') {
-          <ul
-          class="dropdown-content bg-stone-100 divide-y divide-white rounded-lg shadow z-10 w-52 p-4"
+      </li>
+      <li>
+        <div
+          class="dropdown dropdown-end me-2"
+          tabindex="1"
+          (click)="toggleDropdown('adminMenu', $event)"
         >
+          <div class="w-10 h-10 rounded-full cursor-pointer">Admin</div>
+          @if (activeMenu === 'adminMenu') {
+          <ul
+            class="absolute top-full left-0 mt-2 dropdown-content z-10 bg-stone-100 divide-y divide-white rounded-lg shadow w-44"
+          >
+            <li>
+              <a
+                class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                routerLink="/admin/add-product"
+                >Add Product</a
+              >
+            </li>
+            <li>
+              <a
+                class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                routerLink="/admin/orders"
+                >Orders</a
+              >
+            </li>
+            <li>
+              <a
+                class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                routerLink="/admin/manage-users"
+                >Manage Users</a
+              >
+            </li>
+          </ul>
+          }
+        </div>
+      </li>
+    </div>
+  </div>
+  <div class="navbar-end pe-4 flex align-items-center">
+    @if (isLoggedIn) {
+    <div class="dropdown dropdown-end me-2">
+      <img
+        tabindex="0"
+        role="button"
+        src="avatar.jpg"
+        alt="User Avatar"
+        class="w-10 h-10 rounded-full cursor-pointer"
+        (click)="toggleDropdown('profileMenu', $event)"
+      />
+      @if (activeMenu === 'profileMenu') {
+      <div
+        class="dropdown-content z-10 bg-stone-100 divide-y divide-white rounded-lg shadow w-44"
+      >
+        <div class="px-4 py-3 text-sm text-gray-900">
+          <div>{{ userName }}</div>
+          <div class="font-medium truncate">{{ userEmail }}</div>
+        </div>
+        <ul class="py-2 text-sm text-gray-800">
           <li>
             <a
-              class="block px-4 py-2 text-gray-800 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-              routerLink="/login"
-              (click)="closeDropdown()"
+              routerLink="/dashboard"
+              class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
             >
-              Login
+              Dashboard
             </a>
           </li>
           <li>
             <a
-              class="block px-4 py-2 text-gray-800 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-              routerLink="/register"
-              (click)="closeDropdown()"
+              routerLink="/settings"
+              class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
             >
-              Register
+              Settings
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/earnings"
+              class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+            >
+              Earnings
             </a>
           </li>
         </ul>
-         }
-      </div>
-      <div class="dropdown dropdown-end me-2">
-        <div tabindex="0" role="button" routerLink="/cart">
-          <fa-icon
-            [icon]="['fas', 'cart-shopping']"
-            class="menu-icon text-xl"
-          ></fa-icon>
+        <div class="py-1">
+          <button
+            (click)="logout()"
+            class="block w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+          >
+            Sign out
+          </button>
         </div>
+      </div>
+      }
+    </div>
+    }@else {
+    <div class="dropdown dropdown-end me-2">
+      <div
+        tabindex="0"
+        role="button"
+        (click)="toggleDropdown('userMenu', $event)"
+      >
+        <fa-icon [icon]="['fas', 'user']" class="menu-icon text-xl"></fa-icon>
+      </div>
+      @if (activeMenu === 'userMenu') {
+      <ul
+        class="dropdown-content bg-stone-100 divide-y divide-white rounded-lg shadow z-10 w-52 p-4"
+      >
+        <li>
+          <a
+            class="block px-4 py-2 text-gray-800 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+            routerLink="/login"
+            (click)="closeDropdown()"
+          >
+            Login
+          </a>
+        </li>
+        <li>
+          <a
+            class="block px-4 py-2 text-gray-800 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+            routerLink="/register"
+            (click)="closeDropdown()"
+          >
+            Register
+          </a>
+        </li>
+      </ul>
+      }
+    </div>
+    }
+    <div class="dropdown dropdown-end me-2">
+      <div tabindex="0" role="button" routerLink="/cart">
+        <fa-icon
+          [icon]="['fas', 'cart-shopping']"
+          class="menu-icon text-xl"
+        ></fa-icon>
       </div>
     </div>
   </div>
-  
+</div>

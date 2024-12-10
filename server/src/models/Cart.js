@@ -12,6 +12,9 @@ const cartItemSchema = new Schema(
       required: true,
       min: 1,
     },
+    selectedSize: {
+      type: String,
+    },
   },
   { _id: false }
 );
@@ -20,14 +23,13 @@ const cartSchema = new Schema(
   {
     userId: {
       type: Types.ObjectId,
-      ref: "User", 
+      ref: "User",
       required: true,
     },
-    items: [cartItemSchema], 
+    items: [cartItemSchema],
   },
   { timestamps: true }
 );
-
 
 const Cart = model("Cart", cartSchema);
 
