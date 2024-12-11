@@ -61,10 +61,10 @@ export class OrdersComponent {
     this.orderService.rejectOrder(orderId).subscribe({
       next: (response) => {
         this.loadOrders();
-        this.toastr.success('Order rejected successfully!', 'Success');
+        this.toastr.success('Order Rejected successfully!', 'Success');
       },
       error: (error) => {
-        console.error('Error rejecting order', error);
+        console.error('Error rejecting order', error.message);
         this.toastr.error('Failed to reject order', 'Error');
       },
     });

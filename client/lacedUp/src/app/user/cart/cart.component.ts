@@ -88,9 +88,18 @@ export class CartComponent {
   }
 
   checkout() {
+    if (!this.areAllSizesSelected()) {
+      this.toastr.warning('Please select a size for all items before checking out.', 'Size Missing');
+      return;
+    }
+  
     this.router.navigate(['/checkout'], {
       state: { cartItems: this.cart?.items, totalPrice: this.total },
     });
+  }
+  
+  areAllSizesSelected(): boolean {
+    return this.cart?.items.every((item) => !!item.selectedSize) ?? false;
   }
 
   selectSize(item: CartItem, size: string): void {

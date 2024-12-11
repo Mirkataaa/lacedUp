@@ -120,17 +120,19 @@ const approveOrder = async (orderId) => {
 
 
 
-// * Reject an order (change its status to rejected)
+// * Reject an order (change its status to Rejected)
 const rejectOrder = async (orderId) => {
   try {
     const order = await Order.findById(orderId);
     if (!order) throw new Error("Order not found");
 
-    order.status = "rejected";
+    order.status = "Rejected";
     await order.save();
 
     return order;
   } catch (error) {
+    console.log(error.message);
+    
     throw new Error("Error rejecting order");
   }
 };

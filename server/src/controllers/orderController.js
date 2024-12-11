@@ -86,6 +86,8 @@ orderController.put("/reject/:id", async (req, res) => {
     const order = await orderService.rejectOrder(id);
     res.status(200).json(order);
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ message: error.message });
   }
 });

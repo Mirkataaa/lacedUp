@@ -49,7 +49,7 @@ export class AccessoriesComponent {
       },
       error: (error) => {
         console.error('Error adding item to cart:', error);
-        this.toastr.error('Failed to add item to cart', 'Error');
+        this.toastr.error('Log in to add to cart!')
       },
     });
   }
