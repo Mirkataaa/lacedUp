@@ -14,6 +14,7 @@ import { LoginGuard } from './guards/login.guard';
 import { ErrorComponent } from './error/error.component';
 import { ManageUsersComponent } from './admin/manage-users/manage-users.component';
 import { AuthGuard } from './guards/auth.guard';
+import { EditProductsComponent } from './admin/edit-products/edit-products.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ export const routes: Routes = [
       { path: 'add-product', component: AddProductComponent , canActivate: [AuthGuard] ,  data: { role: ['admin' , 'manager'] }},
       { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] ,  data: { role: ['admin' , 'manager'] }},
       { path: 'manage-users', component: ManageUsersComponent , canActivate: [AuthGuard] , data: {role: ['admin']}},
+      {path: 'edit-products' , component: EditProductsComponent , canActivate:[AuthGuard] , data: {role: ['admin' , 'manager']}}
     ],
   },
   {

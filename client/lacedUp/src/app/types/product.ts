@@ -10,7 +10,7 @@ export interface Product {
     sizes: { size: string; stock: number }[];
     material: string;
     gender: string;
-    owner?: string | null; // Reference to user
+    owner?: string | null
     createdAt?: Date;
     updatedAt?: Date;
   }

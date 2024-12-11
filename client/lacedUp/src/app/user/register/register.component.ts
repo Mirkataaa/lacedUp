@@ -76,7 +76,6 @@ export class RegisterComponent {
 
       console.log({email, username , password , rePassword});
       
-    // TODO: Fix types
     this.userService
     .register(username!, email! , password! , rePassword!)
     .subscribe(() => {

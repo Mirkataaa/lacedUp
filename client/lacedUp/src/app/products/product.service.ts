@@ -23,7 +23,7 @@ export class ProductService {
   }
 
   getAllProducts(): Observable<Product[]> {
-    const url = '/api/product';
+    const url = '/api/products';
     return this.http.get<Product[]>(url);
   }
   getProductById(id: string): Observable<Product> {
@@ -37,10 +37,11 @@ export class ProductService {
     return this.http.post<any>(url, productData);
   }
 
-  updateProduct(id: string, productData: Product): Observable<Product> {
-    const url = `/api/product/${id}`;
-    return this.http.put<Product>(url, productData);
+  updateProduct(product: Product): Observable<Product> {
+    const url = `/api/products/${product._id}`;
+    return this.http.put<Product>(url, product);
   }
+  
 
   deleteProduct(id: string): Observable<void> {
     const url = `/api/product/${id}`;

@@ -41,9 +41,6 @@ export class SneakersComponent {
     this.cartService.addItemToCart(productId, quantity).subscribe({
       next: (data) => {
         console.log( 'Sneaker data' ,data);
-        
-        // Optionally reload cart data after adding the item
-        // this.loadCart(); // Refresh the cart after adding item
       },
       error: (error) => {
         console.error('Error adding item to cart:', error);

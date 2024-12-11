@@ -41,7 +41,7 @@ export class ManageUsersComponent {
         const updatedUsers = this.users().map((user) =>
           user._id === updatedUser._id ? updatedUser : user
         );
-        this.users.set(updatedUsers); // Update the users signal
+        this.users.set(updatedUsers);
       },
       error: (error) => {
         console.error('Failed to update role:', error);
@@ -68,22 +68,14 @@ export class ManageUsersComponent {
         .subscribe({
           next: (response) => {
             const updatedUser = response.user;
-
-            // Access the current users directly
-            const currentUsers = this.users(); // Call the signal to get the current value
-
-            // Find and update the user
+            const currentUsers = this.users();
             const index = currentUsers.findIndex(
               (user) => user._id === updatedUser._id
             );
             if (index > -1) {
               currentUsers[index] = updatedUser;
             }
-
-            // Update the signal with the new user list
             this.users.set(currentUsers);
-
-            // Close the modal
             this.closeModal();
           },
           error: (err) => {
@@ -100,7 +92,7 @@ export class ManageUsersComponent {
           const updatedUsers = this.users().filter(
             (user) => user._id !== userId
           );
-          this.users.set(updatedUsers); // Remove the deleted user from the signal
+          this.users.set(updatedUsers);
           console.log(`User with ID ${userId} deleted.`);
         },
         error: (err) => {

@@ -1,0 +1,267 @@
+<div class="font-sans overflow-x-auto">
+    <table class="min-w-full bg-white border-collapse table-auto">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-4 text-left text-xs font-semibold text-gray-800 border-b border-r w-1/4">
+            Name
+          </th>
+          <th class="p-4 text-left text-xs font-semibold text-gray-800 border-b border-r w-1/4">
+            Category
+          </th>
+          <th class="p-4 text-left text-xs font-semibold text-gray-800 border-b border-r w-1/4">
+            Size and Stock
+          </th>
+          <th class="p-4 text-left text-xs font-semibold text-gray-800 border-b w-1/4">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="whitespace-nowrap">
+        @for (product of products; track $index) {
+          <tr class="hover:bg-gray-50">
+            <td class="p-4 text-[15px] text-gray-800 border-b border-r">
+              {{ product.name }}
+            </td>
+            <td class="p-4 text-[15px] text-gray-800 border-b border-r">
+              {{ product.category }}
+            </td>
+            <td class="p-4 text-[15px] text-gray-800 border-b border-r">
+              <div class="space-y-2">
+                @for (sizeGroup of product.sizes; track $index) {
+                  <div class="flex justify-between">
+                    <span class="font-semibold">Size: {{ sizeGroup.size }} - Stock: {{ sizeGroup.stock }}</span>
+                  </div>
+                }
+              </div>
+            </td>
+            <td class="p-4 border-b">
+              <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" (click)="openEditModal(product)">
+                Edit
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (selectedProduct) {
+      <div  id="modal-overlay" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div id="modal">
+          <form 
+            class="max-w-xl mx-auto bg-gray-100 p-6 rounded-lg shadow-md"
+            (ngSubmit)="onUpdate()"
+            [formGroup]="productForm"
+          >
+          <form
+         
+          [formGroup]="productForm"
+        >
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label for="name" class="block mb-2 text-sm font-medium text-black"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="John"
+                required
+              />
+            </div>
+        
+            <div>
+              <label for="category" class="block mb-2 text-sm font-medium text-black"
+                >Category</label
+              >
+              <select
+                id="category"
+                formControlName="category"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              >
+                <option value="">Choose a category</option>
+                <option value="Sneakers">Sneakers</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Accessories">Accessories</option>
+              </select>
+            </div>
+        
+            <div>
+              <label for="brand" class="block mb-2 text-sm font-medium text-black"
+                >Brand</label
+              >
+              <select
+                id="brand"
+                formControlName="brand"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              >
+                <option value="">Choose a brand</option>
+                <option value="Nike">Nike</option>
+                <option value="Adidas">Adidas</option>
+                <option value="Puma">Puma</option>
+                <option value="New Balance">New Balance</option>
+                <option value="Asics">Asics</option>
+              </select>
+            </div>
+        
+            <div>
+              <label for="image" class="block mb-2 text-sm font-medium text-black"
+                >Image URL</label
+              >
+              <input
+                type="url"
+                id="image"
+                formControlName="image"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              />
+            </div>
+        
+            <div>
+              <label for="color" class="block mb-2 text-sm font-medium text-black"
+                >Color</label
+              >
+              <input
+                type="text"
+                id="color"
+                formControlName="color"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="e.g., Red"
+                required
+              />
+            </div>
+        
+            <div>
+              <label for="material" class="block mb-2 text-sm font-medium text-black"
+                >Material</label
+              >
+              <input
+                type="text"
+                id="material"
+                formControlName="material"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="e.g., Cotton"
+                required
+              />
+            </div>
+        
+            <div>
+              <label for="gender" class="block mb-2 text-sm font-medium text-black"
+                >Gender</label
+              >
+              <select
+                id="gender"
+                formControlName="gender"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required
+              >
+                <option value="">Choose gender</option>
+                <option value="Man">Man</option>
+                <option value="Lady">Lady</option>
+                <option value="Unisex">Unisex</option>
+              </select>
+            </div>
+        
+            <div>
+              <label for="price" class="block mb-2 text-sm font-medium text-black"
+                >Price</label
+              >
+              <input
+                type="number"
+                id="price"
+                formControlName="price"
+                class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="e.g., 100"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label class="block mb-2 text-sm font-medium text-black"
+              >Sizes and Stock</label
+            >
+            <div formArrayName="sizes">
+              @for (sizeGroup of sizes.controls; track $index) {
+              <div [formGroupName]="$index" class="flex items-center gap-4 mb-4">
+                <select
+                  formControlName="size"
+                  class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                >
+                  <option value="">Choose a size</option>
+                  @if (productForm.get('category')?.value === 'Sneakers') { @for (size
+                  of ['39', '40', '41', '42', '43', '44', '45']; track $index) {
+                  <option [value]="size">{{ size }}</option>
+                  } } @else if (productForm.get('category')?.value === 'Clothing') {
+                  @for (size of ['S', 'M', 'L', 'XL', 'XXL'] ; track $index) {
+                  <option [value]="size">{{ size }}</option>
+                  } } @else {
+                  <option disabled>No sizes available for the selected category</option>
+                  }
+                </select>
+        
+                <input
+                  type="number"
+                  formControlName="stock"
+                  placeholder="Stock"
+                  class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                />
+        
+                <button
+                  type="button"
+                  (click)="removeSize($index)"
+                  class="text-red-600 hover:text-red-800 font-bold text-sm"
+                >
+                  Remove
+                </button>
+              </div>
+              }
+            </div>
+        
+            <button
+              type="button"
+              (click)="addSize()"
+              class="text-blue-600 hover:text-blue-800 font-bold text-sm"
+            >
+              + Add Size
+            </button>
+          </div>
+        
+          <div class="mb-6">
+            <label for="description" class="block mb-2 text-sm font-medium text-black"
+              >Description</label
+            >
+            <textarea
+              id="description"
+              rows="4"
+              formControlName="description"
+              class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Enter a description"
+              required
+            ></textarea>
+          </div>
+        </form>
+            
+            <button
+              type="button"
+              class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+              (click)="closeModal()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              [disabled]="productForm.invalid"
+            >
+              Save Changes
+            </button>
+          </form>
+        </div>
+      </div>
+  }
+  
