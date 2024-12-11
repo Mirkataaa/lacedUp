@@ -10,12 +10,13 @@ import { DetailsComponent } from './products/details/details.component';
 import { CheckoutComponent } from './user/checkout/checkout.component';
 import { CartComponent } from './user/cart/cart.component';
 import { OrdersComponent } from './admin/orders/orders.component';
+import { LoginGuard } from './guards/login.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent , canActivate:[LoginGuard]},
+  { path: 'register', component: RegisterComponent , canActivate:[LoginGuard]},
   {
     path: 'admin',
     children: [

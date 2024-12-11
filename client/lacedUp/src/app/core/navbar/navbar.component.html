@@ -51,6 +51,7 @@
           }
         </div>
       </li>
+      @if (role === 'admin' || role === 'manager') {
       <li>
         <div
           class="dropdown dropdown-end me-2"
@@ -76,6 +77,7 @@
                 >Orders</a
               >
             </li>
+            @if (role === 'admin') {
             <li>
               <a
                 class="block px-4 py-2 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
@@ -83,10 +85,12 @@
                 >Manage Users</a
               >
             </li>
+            }
           </ul>
           }
         </div>
       </li>
+      }
     </div>
   </div>
   <div class="navbar-end pe-4 flex align-items-center">

@@ -16,19 +16,23 @@ export class NavbarComponent {
   userEmail: string | null = null;
   activeMenu: string | null = null;
   isLoggedIn: boolean = false;
+  role: string = '';
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.userService.user$.subscribe((user) => {
       if (user) {
+        console.log(user);
         this.userName = user.username;
         this.userEmail = user.email;
         this.isLoggedIn = true;
+        this.role = user.role;
       } else {
         this.userName = null;
         this.userEmail = null;
         this.isLoggedIn = false;
+        this.role = '';
       }
     });
   }

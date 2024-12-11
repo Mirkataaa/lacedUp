@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { User } from '../types/user';
 
 @Injectable({
@@ -24,10 +24,41 @@ export class UserService implements OnDestroy {
     return !!this.user;
   }
 
+  hasRole(role: string): boolean {
+    return this.user?.role === role;
+  }
+
   getProfile() {
     return this.http
       .get<User>('/api/user/profile')
       .pipe(tap((user) => this.user$$.next(user)));
+  }
+
+  setUser(user: User): void {
+    this.user$$.next(user);
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>('/api/user/all').pipe(
+      tap((users) => {
+        console.log('Fetched users:', users);
+      })
+    );
+  }
+
+  updateUserRole(
+    userId: string,
+    role: string
+  ): Observable<{ message: string; user: User }> {
+    return this.http
+      .put<{ message: string; user: User }>(`/api/user/${userId}/role`, {
+        role,
+      })
+      .pipe(
+        tap((response) => {
+          console.log('Role updated:', response);
+        })
+      );
   }
 
   updateProfile(username: string, email: string) {
@@ -71,6 +102,10 @@ export class UserService implements OnDestroy {
         this.user$$.next(null);
       })
     );
+  }
+
+  deleteUser(userId: string): Observable<void> {
+    return this.http.delete<void>(`/api/user/${userId}`);
   }
 
   ngOnDestroy(): void {
