@@ -22,6 +22,17 @@
                 [appEmail]="domains"
               />
             </div>
+            @if(inputEmail?.touched){
+              <div>
+                @if(inputEmail?.errors?.['required']){
+                <p class="text-red-500 rounded-xl">Email is required!</p>
+                }
+                <!--  -->
+                @if(inputEmail?.errors?.['emailValidator']){
+                <p class="text-red-500 rounded-xl">Email is not valid!</p>
+                }
+              </div>
+              }
         </div>
 
         <div>
@@ -43,11 +54,22 @@
               minlength="4"
             />
         </div>
+        @if(inputPassword?.touched){
+          <div>
+            @if(inputPassword?.errors?.['required']){
+            <p class="text-red-500 rounded-xl">Password is required!</p>
+            }
+            <!--  -->
+            @if(inputPassword?.errors?.['minlength']){
+            <p class="text-red-500 rounded-xl">Password must be at least 4 characters!</p>
+            }
+          </div>
+          }
     </div>
 
     <div class="!mt-8">
       <button
-      
+        
         class="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
       >
         Sign in

@@ -4,6 +4,7 @@ import { CartItem } from '../../types/cart';
 import { CartService } from '../cart.service';
 import { Router } from '@angular/router';
 import { OrderService } from '../../admin/order.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -22,7 +23,8 @@ export class CheckoutComponent {
     private fb: FormBuilder,
     private orderService: OrderService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService
   ) {
     this.orderForm = this.fb.group({
       firstName: ['', Validators.required],
@@ -65,14 +67,17 @@ export class CheckoutComponent {
       this.orderService.createOrder(this.cartItems, shippingDetails, this.totalPrice).subscribe({
         next: (response) => {
           console.log('Order created:', response);
+          this.toastr.success('Order placed successfully!', 'Success');
           this.router.navigate(['/home'])
         },
         error: (error) => {
           console.error('Error creating order:', error);
+          this.toastr.error('Error creating order', 'Error');
         }
       });
     } else {
       console.log('Form is invalid');
+      this.toastr.warning('Please fill all required fields', 'Warning');
     }
   }
 

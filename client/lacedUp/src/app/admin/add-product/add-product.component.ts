@@ -77,8 +77,6 @@ export class AddProductComponent {
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      console.log('Form Submitted', this.productForm.value);
-
       this.productService.addProduct(this.productForm.value).subscribe({
         next: (response) => {
           console.log('Product added successfully', response);

@@ -17,6 +17,17 @@
                 formControlName="email"
               />
             </div>
+            @if(form.get('email')?.touched){
+              <div>
+                @if(form.get('email')?.errors?.['required']){
+                <p class="text-red-500 rounded-xl">Email is required!</p>
+                }
+                <!--  -->
+                @if(form.get('email')?.errors?.['emailValidator']){
+                <p class="text-red-500 rounded-xl">Email is not valid!</p>
+                }
+              </div>
+              }
         </div>
           <div>
             <label for="email" class="text-gray-800 text-sm mb-2 block">Username</label>
@@ -32,6 +43,17 @@
                 formControlName="username"
               />
             </div>
+            @if(form.get('username')?.touched){
+              <div>
+                @if(form.get('username')?.errors?.['required']){
+                <p class="text-red-500 rounded-xl">Username is required!</p>
+                }
+                <!--  -->
+                @if(form.get('username')?.errors?.['minlength']){
+                <p class="text-red-500 rounded-xl">Username must be at least 4 characters!</p>
+                }
+              </div>
+              }
         </div>
         <div formGroupName="passGroup">
             <label for="password" class="text-gray-800 text-sm mb-2 block">Password</label>
@@ -51,6 +73,17 @@
                   formControlName="password"
               />
           </div>
+          @if(passGroup?.get('password')?.touched){
+            <div>
+              @if(passGroup?.get('password')?.errors?.['required']){
+              <p class="text-red-500 rounded-xl">Password is required!</p>
+              }
+              <!--  -->
+              @if(passGroup?.get('password')?.errors?.['minlength']){
+              <p class="text-red-500 rounded-xl">Password must be at least 4 characters!</p>
+              }
+            </div>
+            }
       </div>
         <div formGroupName="passGroup">
           <label for="rePassword" class="text-gray-800 text-sm mb-2 block">Repeat Password</label>
@@ -69,6 +102,14 @@
                 placeholder="Repeat Password"
             />
         </div>
+        @if(passGroup?.get('rePassword')?.touched){
+          <div>
+            @if(passGroup?.errors?.['matchPasswordsValidator'] ||
+            passGroup?.get('rePassword')?.errors?.['required']){
+            <p class="text-red-500 rounded-xl">Repeat Password does not match password!</p>
+            }
+          </div>
+          }
     </div>
       
 

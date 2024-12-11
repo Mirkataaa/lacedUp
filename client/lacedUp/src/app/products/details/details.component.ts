@@ -3,6 +3,7 @@ import { Product } from '../../types/product';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../product.service';
 import { CartService } from '../../user/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
@@ -21,7 +22,8 @@ export class DetailsComponent {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService:CartService
+    private cartService:CartService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -44,17 +46,15 @@ export class DetailsComponent {
     }
   }
 
-  selectSize(size: string): void {
-    this.selectedSize = size;
-  }
-
   addItem(productId: string, quantity: number = 1): void {
     this.cartService.addItemToCart(productId, quantity).subscribe({
       next: (data) => {
         console.log( 'Details data' ,data);
+        this.toastr.success('Item added to cart successfully!', 'Success');
       },
       error: (error) => {
         console.error('Error adding item to cart:', error);
+        this.toastr.error('Failed to add item to cart', 'Error');
       }
     });
   }

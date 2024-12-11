@@ -16,6 +16,11 @@
         placeholder="John"
         required
       />
+      @if (productForm.get('name')?.touched && productForm.get('name')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Name is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -34,6 +39,11 @@
         <option value="Clothing">Clothing</option>
         <option value="Accessories">Accessories</option>
       </select>
+      @if (productForm.get('category')?.touched && productForm.get('category')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Category is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -53,6 +63,11 @@
         <option value="New Balance">New Balance</option>
         <option value="Asics">Asics</option>
       </select>
+      @if (productForm.get('brand')?.touched && productForm.get('brand')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Brand is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -66,6 +81,11 @@
         class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         required
       />
+      @if (productForm.get('image')?.touched && productForm.get('image')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Image is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -80,6 +100,11 @@
         placeholder="e.g., Red"
         required
       />
+      @if (productForm.get('color')?.touched && productForm.get('color')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Color is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -94,6 +119,11 @@
         placeholder="e.g., Cotton"
         required
       />
+      @if (productForm.get('material')?.touched && productForm.get('material')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Material is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -111,6 +141,11 @@
         <option value="Lady">Lady</option>
         <option value="Unisex">Unisex</option>
       </select>
+      @if (productForm.get('gender')?.touched && productForm.get('gender')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Gender is required!
+        </div>
+      }
     </div>
 
     <div>
@@ -125,10 +160,18 @@
         placeholder="e.g., 100"
         required
       />
+      @if (productForm.get('price')?.touched && productForm.get('price')?.hasError('required')) {
+        <div class="text-red-500 text-sm">
+          Price is required!
+        </div>
+      }
+      @if (productForm.get('price')?.touched && productForm.get('price')?.hasError('min')) {
+        <div class="text-red-500 text-sm">
+          Price must be greater than zero!
+        </div>
+      }
     </div>
   </div>
-
-  <!-- Dynamic Sizes and Stock -->
   <div>
     <label class="block mb-2 text-sm font-medium text-black"
       >Sizes and Stock</label
@@ -160,6 +203,16 @@
           class="bg-gray-50 border border-blue-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
         />
+        @if (sizeGroup.get('stock')?.touched && sizeGroup.get('stock')?.hasError('required')) {
+          <div class="text-red-500 text-sm">
+            Stock is required!
+          </div>
+        }
+        @if (sizeGroup.get('stock')?.touched && sizeGroup.get('stock')?.hasError('min')) {
+          <div class="text-red-500 text-sm">
+            Stock must be a positive number!
+          </div>
+        }
 
         <button
           type="button"
@@ -193,6 +246,11 @@
       placeholder="Enter a description"
       required
     ></textarea>
+    @if (productForm.get('description')?.touched && productForm.get('description')?.hasError('required')) {
+      <div class="text-red-500 text-sm">
+        Description is required!
+      </div>
+    }
   </div>
 
   <button

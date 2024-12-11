@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { User } from '../../types/user';
 import { UserService } from '../../user/user.service';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-manage-users',
@@ -16,7 +17,7 @@ export class ManageUsersComponent {
   isModalOpen = false;
   selectedUser: User | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService , private toastr:ToastrService) {}
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -42,9 +43,11 @@ export class ManageUsersComponent {
           user._id === updatedUser._id ? updatedUser : user
         );
         this.users.set(updatedUsers);
+        this.toastr.success('User role updated successfully!', 'Success');
       },
       error: (error) => {
         console.error('Failed to update role:', error);
+        this.toastr.error('Failed to update user role', 'Error');
       },
     });
   }
@@ -77,9 +80,11 @@ export class ManageUsersComponent {
             }
             this.users.set(currentUsers);
             this.closeModal();
+            this.toastr.success('User role updated successfully!', 'Success');
           },
           error: (err) => {
             console.error('Error updating user role:', err);
+            this.toastr.error('Error saving user role update', 'Error');
           },
         });
     }
@@ -93,9 +98,11 @@ export class ManageUsersComponent {
             (user) => user._id !== userId
           );
           this.users.set(updatedUsers);
+          this.toastr.success('User deleted successfully!', 'Success');
           console.log(`User with ID ${userId} deleted.`);
         },
         error: (err) => {
+          this.toastr.error('Failed to delete user', 'Error');
           console.error('Error deleting user:', err);
         },
       });

@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { CartService } from '../../user/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sneakers',
@@ -21,7 +22,7 @@ export class SneakersComponent {
   productId: string = ''
   quantity: number = 1;
 
-  constructor(private productService: ProductService , private route: ActivatedRoute , private cartService:CartService) {}
+  constructor(private productService: ProductService , private toastr: ToastrService , private cartService:CartService) {}
 
   ngOnInit(): void {
     this.onScroll();
@@ -40,10 +41,12 @@ export class SneakersComponent {
   addItem(productId: string, quantity: number = 1): void {
     this.cartService.addItemToCart(productId, quantity).subscribe({
       next: (data) => {
+        this.toastr.success('Item added to cart successfully!', 'Success');
         console.log( 'Sneaker data' ,data);
       },
       error: (error) => {
         console.error('Error adding item to cart:', error);
+        this.toastr.error('Log in to add to cart!')
       }
     });
   }

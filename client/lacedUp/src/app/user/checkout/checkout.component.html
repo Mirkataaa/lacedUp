@@ -1,145 +1,184 @@
 <div class="font-[sans-serif] bg-white">
-    <div class="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
-      <div
-        class="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 sm:h-screen sm:sticky sm:top-0 lg:min-w-[370px] sm:min-w-[300px]"
-      >
-        <div class="relative h-full">
-          <div class="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
-            <div class="space-y-4">
-              @for (item of cartItems; track $index) {
-              <div class="flex items-start gap-4">
-                <div
-                  class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md"
-                >
-                  <img
-                    [src]="item.productId.image"
-                    class="w-full object-contain"
-                  />
-                </div>
-                <div class="w-full">
-                  <h3 class="text-base text-white">{{ item.productId.name }}</h3>
-                  <ul class="text-xs text-gray-300 space-y-2 mt-2">
-                    <li class="flex flex-wrap gap-4">
-                      Size <span class="ml-auto">{{ item.selectedSize }}</span>
-                    </li>
-                    <li class="flex flex-wrap gap-4">
-                      Quantity <span class="ml-auto">{{ item.quantity }}</span>
-                    </li>
-                    <li class="flex flex-wrap gap-4">
-                      Total Price
-                      <span class="ml-auto"
-                        >${{ item.productId.price * item.quantity }}</span
-                      >
-                    </li>
-                  </ul>
-                </div>
+  <div class="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
+    <div
+      class="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 sm:h-screen sm:sticky sm:top-0 lg:min-w-[370px] sm:min-w-[300px]"
+    >
+      <div class="relative h-full">
+        <div class="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
+          <div class="space-y-4">
+            @for (item of cartItems; track $index) {
+            <div class="flex items-start gap-4">
+              <div
+                class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md"
+              >
+                <img
+                  [src]="item.productId.image"
+                  class="w-full object-contain"
+                />
               </div>
+              <div class="w-full">
+                <h3 class="text-base text-white">{{ item.productId.name }}</h3>
+                <ul class="text-xs text-gray-300 space-y-2 mt-2">
+                  <li class="flex flex-wrap gap-4">
+                    Size <span class="ml-auto">{{ item.selectedSize }}</span>
+                  </li>
+                  <li class="flex flex-wrap gap-4">
+                    Quantity <span class="ml-auto">{{ item.quantity }}</span>
+                  </li>
+                  <li class="flex flex-wrap gap-4">
+                    Total Price
+                    <span class="ml-auto"
+                      >${{ item.productId.price * item.quantity }}</span
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="md:absolute md:left-0 md:bottom-0 bg-gray-800 w-full p-4">
+          <h4 class="flex flex-wrap gap-4 text-base text-white">
+            Total
+            <span class="ml-auto">${{ calculateTotalPrice(cartItems) }}</span>
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">
+      <h2 class="text-2xl font-bold text-gray-800">Complete your order</h2>
+      <form class="mt-8" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+        <div>
+          <h3 class="text-base text-gray-800 mb-4">Personal Details</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <input
+                formControlName="firstName"
+                placeholder="First Name"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('firstName')?.invalid && orderForm.get('firstName')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  First name is required.
+                </div>
+              }
+            </div>
+            <div>
+              <input
+                formControlName="lastName"
+                placeholder="Last Name"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('lastName')?.invalid && orderForm.get('lastName')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  Last name is required.
+                </div>
+              }
+            </div>
+            <div>
+              <input
+                formControlName="email"
+                type="email"
+                placeholder="Email"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('email')?.invalid && orderForm.get('email')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  A valid email is required.
+                </div>
+              }
+            </div>
+            <div>
+              <input
+                formControlName="phoneNo"
+                type="number"
+                placeholder="Phone No."
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('phoneNo')?.invalid && orderForm.get('phoneNo')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  Phone number is required.
+                </div>
               }
             </div>
           </div>
-  
-          <div class="md:absolute md:left-0 md:bottom-0 bg-gray-800 w-full p-4">
-            <h4 class="flex flex-wrap gap-4 text-base text-white">
-              Total
-              <span class="ml-auto">${{ calculateTotalPrice(cartItems) }}</span>
-            </h4>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-base text-gray-800 mb-4">Shipping Address</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <input
+                formControlName="address"
+                type="text"
+                placeholder="Address Line"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('address')?.invalid && orderForm.get('address')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  Address is required.
+                </div>
+              }
+            </div>
+            <div>
+              <input
+                formControlName="city"
+                type="text"
+                placeholder="City"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('city')?.invalid && orderForm.get('city')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  City is required.
+                </div>
+              }
+            </div>
+            <div>
+              <input
+                formControlName="state"
+                type="text"
+                placeholder="State"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('state')?.invalid && orderForm.get('state')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  State is required.
+                </div>
+              }
+            </div>
+            <div>
+              <input
+                formControlName="zipCode"
+                type="text"
+                placeholder="Zip Code"
+                class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
+              />
+              @if (orderForm.get('zipCode')?.invalid && orderForm.get('zipCode')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  Zip Code is required.
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex gap-4 max-md:flex-col mt-8">
+            <button
+              type="button"
+              class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-transparent hover:bg-gray-100 border border-gray-300 text-gray-800 max-md:order-1"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              [disabled]="orderForm.invalid"
+              class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Complete Purchase
+            </button>
           </div>
         </div>
-      </div>
-      <div class="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">
-        <h2 class="text-2xl font-bold text-gray-800">Complete your order</h2>
-        <form class="mt-8" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-          <div>
-            <h3 class="text-base text-gray-800 mb-4">Personal Details</h3>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div>
-                <input
-                  formControlName="firstName"
-                  placeholder="First Name"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-              <div>
-                <input
-                  formControlName="lastName"
-                  placeholder="Last Name"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-              <div>
-                <input
-                  formControlName="email"
-                  type="email"
-                  placeholder="Email"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-              <div>
-                <input
-                  formControlName="phoneNo"
-                  type="number"
-                  placeholder="Phone No."
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-            </div>
-          </div>
-  
-          <div class="mt-8">
-            <h3 class="text-base text-gray-800 mb-4">Shipping Address</h3>
-            <div class="grid md:grid-cols-2 gap-4">
-              <div>
-                <input
-                  formControlName="address"
-                  type="text"
-                  placeholder="Address Line"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-              <div>
-                <input
-                  formControlName="city"
-                  type="text"
-                  placeholder="City"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-              <div>
-                <input
-                  formControlName="state"
-                  type="text"
-                  placeholder="State"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-              <div>
-                <input
-                  formControlName="zipCode"
-                  type="text"
-                  placeholder="Zip Code"
-                  class="px-4 py-3 bg-gray-100 text-gray-800 w-full text-sm rounded-md"
-                />
-              </div>
-            </div>
-  
-            <div class="flex gap-4 max-md:flex-col mt-8">
-              <button
-                type="button"
-                class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-transparent hover:bg-gray-100 border border-gray-300 text-gray-800 max-md:order-1"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                [disabled]="orderForm.invalid"
-                class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                Complete Purchase
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+      </form>
     </div>
   </div>
-  
+</div>

@@ -12,12 +12,15 @@
           Discover the best in fashion with our curated sneaker and clothing
           collection. Style and comfort in every pair.
         </p>
-        <div class="flex justify-center md:justify-start">
-          <a
-            class="p-3 px-6 pt-2 text-white bg-blue-600 rounded-full hover:bg-blue-300"
-            >Sign Up</a
-          >
-        </div>
+        @if (!isLoggedIn) {
+          <div class="flex justify-center md:justify-start">
+            <a
+            routerLink="/register"
+              class="p-3 px-6 pt-2 text-white bg-blue-600 rounded-full hover:bg-blue-300"
+              >Sign Up</a
+            >
+          </div>
+        }
       </div>
   
       <div class="md:w-1/2">

@@ -103,9 +103,17 @@ export class EditProductsComponent {
   onUpdate(): void {
     if (this.selectedProduct && this.productForm.valid) {
       const updatedProduct = { ...this.selectedProduct, ...this.productForm.value };
-      this.productService.updateProduct(updatedProduct).subscribe(() => {
-        this.loadProducts();
-        this.closeModal();
+
+      this.productService.updateProduct(updatedProduct).subscribe({
+        next: () => {
+          this.loadProducts();
+          this.closeModal();
+          this.toastr.success('Product updated successfully!', 'Success');
+        },
+        error: (err) => {
+          console.error('Error updating product:', err);
+          this.toastr.error('Failed to update the product.', 'Error');  
+        }
       });
     }
   }

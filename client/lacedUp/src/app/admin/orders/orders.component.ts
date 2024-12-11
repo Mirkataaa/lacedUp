@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Order } from '../../types/order';
 import { OrderService } from '../order.service';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-orders',
@@ -15,7 +16,7 @@ export class OrdersComponent {
   selectedOrder: any = null;
   isModalOpen: boolean = false;
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService , private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -47,9 +48,11 @@ export class OrdersComponent {
     this.orderService.approveOrder(orderId).subscribe({
       next: (response) => {
         this.loadOrders();
+        this.toastr.success('Order approved successfully!', 'Success');
       },
       error: (error) => {
         console.error('Error approving order', error);
+        this.toastr.error('Failed to approve order', 'Error');
       },
     });
   }
@@ -58,9 +61,11 @@ export class OrdersComponent {
     this.orderService.rejectOrder(orderId).subscribe({
       next: (response) => {
         this.loadOrders();
+        this.toastr.success('Order rejected successfully!', 'Success');
       },
       error: (error) => {
         console.error('Error rejecting order', error);
+        this.toastr.error('Failed to reject order', 'Error');
       },
     });
   }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Cart, CartItem } from '../../types/cart';
 import { CartService } from '../cart.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -17,7 +18,11 @@ export class CartComponent {
   subtotal: number = 0;
   total: number = 0;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.loadCart();
@@ -39,9 +44,11 @@ export class CartComponent {
   removeItem(productId: string) {
     this.cartService.removeItemFromCart(productId).subscribe({
       next: (data) => {
+        this.toastr.success('Item removed from cart!', 'Success');
         this.loadCart();
       },
       error: (error) => {
+        this.toastr.error('Error removing item from cart', 'Error');
         console.error('Error removing item from cart:', error);
       },
     });
