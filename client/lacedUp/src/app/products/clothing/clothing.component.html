@@ -11,7 +11,8 @@
       class="bg-gray-50 shadow-md overflow-hidden rounded-lg hover:-translate-y-2 transition-all relative"
     >
       <div
-        class="bg-gray-100 w-10 h-10 flex items-center justify-center rounded-full cursor-pointer absolute top-3 right-3"
+        (click)="addItem(product._id, 1)"
+        class="bg-gray-100 w-10 h-10 flex items-center justify-center rounded-full cursor-pointer absolute top-3 right-3 hover:bg-red-400"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

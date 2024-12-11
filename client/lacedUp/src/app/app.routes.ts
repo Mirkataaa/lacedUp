@@ -11,6 +11,9 @@ import { CheckoutComponent } from './user/checkout/checkout.component';
 import { CartComponent } from './user/cart/cart.component';
 import { OrdersComponent } from './admin/orders/orders.component';
 import { LoginGuard } from './guards/login.guard';
+import { ErrorComponent } from './error/error.component';
+import { ManageUsersComponent } from './admin/manage-users/manage-users.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,8 +23,9 @@ export const routes: Routes = [
   {
     path: 'admin',
     children: [
-      { path: 'add-product', component: AddProductComponent },
-      { path: 'orders', component: OrdersComponent },
+      { path: 'add-product', component: AddProductComponent , canActivate: [AuthGuard] ,  data: { role: ['admin' , 'manager'] }},
+      { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] ,  data: { role: ['admin' , 'manager'] }},
+      { path: 'manage-users', component: ManageUsersComponent , canActivate: [AuthGuard] , data: {role: ['admin']}},
     ],
   },
   {
@@ -33,6 +37,8 @@ export const routes: Routes = [
       { path: ':category/:id', component: DetailsComponent },
     ],
   },
-  {path: 'checkout' , component: CheckoutComponent},
-  {path: 'cart' , component: CartComponent},
+  {path: 'checkout' , component: CheckoutComponent , canActivate: [AuthGuard]},
+  {path: 'cart' , component: CartComponent , canActivate: [AuthGuard]},
+  { path: '404', component: ErrorComponent },
+  { path: '**', redirectTo: '/404' },
 ];

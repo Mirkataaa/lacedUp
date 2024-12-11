@@ -38,8 +38,9 @@
           </div>
         </div>
 
+        @if (product?.category === 'Sneakers' || product?.category ===
+        'Clothing') {
         <hr class="my-8" />
-
         <div>
           <h3 class="text-xl font-bold text-gray-800">Available sizes</h3>
           <div class="flex flex-wrap gap-4 mt-4">
@@ -52,6 +53,7 @@
             }
           </div>
         </div>
+        }
 
         <hr class="my-8" />
 

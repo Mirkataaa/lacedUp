@@ -4,6 +4,7 @@ import { ProductService } from '../product.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { CartService } from '../../user/cart.service';
 
 @Component({
   selector: 'app-accessories',
@@ -20,7 +21,10 @@ export class AccessoriesComponent {
   productId: string = '';
   quantity: number = 1;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.onScroll();
@@ -33,5 +37,16 @@ export class AccessoriesComponent {
         this.products = [...this.products, ...response.products];
         this.offset += this.limit;
       });
+  }
+
+  addItem(productId: string, quantity: number = 1): void {
+    this.cartService.addItemToCart(productId, quantity).subscribe({
+      next: (data) => {
+        console.log('Accesories data', data);
+      },
+      error: (error) => {
+        console.error('Error adding item to cart:', error);
+      },
+    });
   }
 }

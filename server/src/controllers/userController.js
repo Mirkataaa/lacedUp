@@ -18,7 +18,7 @@ userController.post("/register", isGuest, async (req, res) => {
       password,
       rePassword
     );
-    const user = await User.findOne({ email }); // Fetch the newly created user to include their details
+    const user = await User.findOne({ email });
     res.cookie(AUTH_COOKIE_NAME, token, {
       httpOnly: true,
       secure: true,
@@ -43,7 +43,7 @@ userController.post("/register", isGuest, async (req, res) => {
 });
 
 // * Login route
-userController.post("/login", isGuest , async (req, res) => {
+userController.post("/login", isGuest, async (req, res) => {
   const { email, password } = req.body;
   try {
     const token = await userService.login(email, password);
@@ -54,17 +54,15 @@ userController.post("/login", isGuest , async (req, res) => {
       sameSite: "Lax",
       maxAge: 3600000,
     });
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        user: {
-          id: user._id,
-          username: user.username,
-          email: user.email,
-          role: user.role,
-        },
-      });
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (err) {
     const errors = getErrorMsg(err);
     res.status(401).json({ message: "Login failed", errors });
@@ -81,7 +79,7 @@ userController.get("/logout", isAuth, (req, res) => {
 // * Get all users
 userController.get("/all", isAuth, hasRole("admin"), async (req, res) => {
   try {
-    const users = await User.find({}, "username email roles"); 
+    const users = await User.find();
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch users" });
@@ -89,52 +87,51 @@ userController.get("/all", isAuth, hasRole("admin"), async (req, res) => {
 });
 
 // * Update role
-userController.put("/:id/role", isAuth, hasRole("admin"), async (req, res) => {
+userController.put('/:id/role', isAuth, async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
 
   try {
-    const user = await User.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const updatedUser = await User.findByIdAndUpdate(id, { role }, { new: true });
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
     }
-
-    // Validate that the role is one of the allowed roles
-    if (!["user", "manager", "admin"].includes(role)) {
-      return res.status(400).json({ message: "Invalid role" });
-    }
-
-    // Update the role as a string (not an array)
-    user.role = role;
-    await user.save();
-
-    res.status(200).json({
-      message: `User role updated successfully`,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (err) {
-    console.error("Error updating role:", err.message);
-    res.status(500).json({ message: "Failed to update role" });
+    return res.json({ message: 'Role updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user role:', error);
+    res.status(500).json({ message: 'Error updating user role' });
   }
 });
-
 
 // * Get profile
 userController.get("/profile", isAuth, (req, res) => {
   const user = req.user;
   res.status(200).json({
-      id: user._id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
+    id: user._id,
+    username: user.username,
+    email: user.email,
+    role: user.role,
   });
 });
 
+userController.delete("/:id", isAuth, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    return res
+      .status(200)
+      .json({ message: "User deleted successfully.", deletedUser });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return res
+      .status(500)
+      .json({ message: "An error occurred while deleting the user.", error });
+  }
+});
 
 export default userController;
